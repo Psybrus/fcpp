@@ -35,6 +35,7 @@ ReturnCode openfile(struct Global *global, char *filename)
   FILE *fp;
   ReturnCode ret;
 
+  //
   if ((fp = fopen(filename, "r")) == NULL)
     ret=FPP_OPEN_ERROR;
   else
@@ -67,6 +68,10 @@ ReturnCode addfile(struct Global *global,
   ret = getfile(global, NBUFF, filename, &file);
   if(ret)
     return(ret);
+
+  if (global->dependency)
+    global->dependency(filename, global->userdata);
+
   file->fp = fp;                        /* Better remember FILE *       */
   file->buffer[0] = EOS;                /* Initialize for first read    */
   global->line = 1;                     /* Working on line 1 now        */
@@ -242,6 +247,9 @@ int dooptions(struct Global *global, struct fppTag *tags)
       break;
     case FPPTAG_OUTPUT:
       global->output=(void (*)(int, void *))tags->data;
+      break;
+	case FPPTAG_DEPENDENCY:
+      global->dependency=(void (*)(char *))tags->data;
       break;
     case FPPTAG_ERROR:
       global->error=(void (*)(void *, char *, va_list))tags->data;

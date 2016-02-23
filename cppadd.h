@@ -209,6 +209,8 @@ struct Global {
 
   void (*error)(void *, char *, va_list);       /* error function */
 
+  void (*dependency)(char *, void *);   /* dependency function */
+
   char linelines;
 
   char warnillegalcpp; /* warn for illegal preprocessor instructions? */

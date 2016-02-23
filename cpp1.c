@@ -102,6 +102,7 @@ int PREFIX fppPreProcess(REG(a0) struct fppTag *tags)
   global->input=NULL;
   global->output=NULL;
   global->error=NULL;
+  global->dependency=NULL;
   global->first_file=NULL;
   global->userdata=NULL;
 

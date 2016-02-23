@@ -141,8 +141,12 @@ int PREFIX fppPreProcess(REG(a0) struct fppTag *tags)
     cerror(global, ERROR_IFDEF_DEPTH, i);
 #endif
   }
-  fflush(stdout);
-  fclose(stdout);
+
+  if(!global->output)
+  {
+    fflush(stdout);
+    fclose(stdout);
+  }
 
   if (global->errors > 0 && !global->eflag)
     return(IO_ERROR);
